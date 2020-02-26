@@ -44,18 +44,17 @@ public class ItemController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		try {
+try {
+			
 			String command = request.getParameter("command");
-			
 			if(command == null) {
-				command = "LIST";
+				command="LIST";
 			}
-			switch(command) {
-			
+			switch (command) {
 			case "LIST":
-				listItems(request,response);
+				listItems(request,response);				
 				break;
-			
+				
 			case "ADD":
 				addItem(request,response);
 				break;
@@ -68,8 +67,16 @@ public class ItemController extends HttpServlet {
 				updateItem(request,response);
 				break;
 			
+			case "DELETE":
+				deleteItem(request,response);
+				break;
+				
+			case "SEARCH":
+				searchItem(request,response);
+				break;
+
 			default:
-				listItems(request, response);
+				listItems(request,response);				
 				break;
 				
 			}
@@ -82,6 +89,27 @@ public class ItemController extends HttpServlet {
 			
 	}
 
+private void searchItem(HttpServletRequest request, HttpServletResponse response)throws Exception {
+		
+		String searchName = request.getParameter("search").trim();
+		
+		List<Item> itemList = itemUtil.searchItems(searchName);
+		
+		request.setAttribute("item_list", itemList);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("list-items.jsp");
+		
+		rd.forward(request, response);
+		
+	}
+
+	private void deleteItem(HttpServletRequest request, HttpServletResponse response)throws Exception {
+		
+		int itemCode = Integer.parseInt(request.getParameter("itemCode"));
+		itemUtil.deleteItem(itemCode);
+		listItems(request, response);
+		
+	}
 	private void updateItem(HttpServletRequest request, HttpServletResponse response)throws Exception {
 		
 		int itemCode = Integer.parseInt(request.getParameter("itemCode"));
@@ -140,14 +168,26 @@ public class ItemController extends HttpServlet {
 		Date doe = new Date();
 		doe = sdf.parse(dateOfExpiry);
 		
+		String message = null;
+		
+		if(!doe.after(dom)) {
+			message = "Date of Expiry can't be less than Date Of Manufacture";
+			request.setAttribute("msg",message);
+			RequestDispatcher rd = request.getRequestDispatcher("add-item-form.jsp");
+			rd.forward(request,response);
+		}
+		else {
+			
+	
 		Item item = new Item(itemName, unit, beginningInventory, quantityOnHand, pricePerUnit, dom, doe, location, itemCategory);
 		
 		itemUtil.addItem(item);
 		
 		// send back to main page (the item list)
 
-		listItems(request, response);
-			
+		//listItems(request, response);
+		response.sendRedirect("ItemController?command=LIST");
+		}	
 	}
 
 	private void listItems(HttpServletRequest request, HttpServletResponse response)throws Exception {

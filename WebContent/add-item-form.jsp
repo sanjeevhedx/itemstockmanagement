@@ -5,7 +5,7 @@
 <!DOCTYPE html">
 <html>
 <head>
-<title>List Items</title>
+<title>Add Items</title>
  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
@@ -35,21 +35,20 @@
 
         <ul class="navbar-nav ml-auto">
         
-           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="fa fa-user-times"></i> 
-            </a>
-          </li>
-          
-          <li class="nav-item mr-3">
-            <a href="#" class="nav-link">
-              <i class="fa fa-user"></i>welcome sanjeev
-            </a>
-           
-          </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="fa fa-user-times"></i> Logout
+               <img src="data:image/jpg;base64,${user.base64Image}" class="rounded-circle" width="40" height="40"/>
+            </a>
+            </li>
+        
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+               Welcome: ${user.firstName }
+            </a>
+            </li>
+          <li class="nav-item">
+            <a href="UserController?command=LOGOUT" class="nav-link">
+               SignOut
             </a>
           </li>
         </ul>
@@ -71,7 +70,7 @@
   
   <div class="container">
 		<h3>Add Item</h3>
-		
+		 <h6 style="color: red;">${msg}</h6>
 		<form action="ItemController" method="post">
 		
 			<input type="hidden" name="command" value="ADD" />

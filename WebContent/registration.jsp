@@ -11,6 +11,9 @@
 <title>Stock Management</title>
 </head>
 <body>
+
+<% response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");%>
+
 <div class="container">
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark p-0">
     <div class="container">
@@ -69,7 +72,7 @@
 				<!-- form start -->
 			
 			
-				<form class="form-horizontal" action="UserController" method="post">
+				<form class="form-horizontal" action="UserController" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="command" value="ADD" />
 				<div class="form-group"> 
 				<label for="inputUserid" class="col-sm-2 control-label"></label>
@@ -112,7 +115,7 @@
     </div>
   </div>
   
-  <div class="form-group">
+  <div class="form-group">                                
     
     <div class="col-sm-10">
     
@@ -127,7 +130,13 @@
     </div>
   </div>
   
-  
+  <div class="form-group">
+    
+    <div class="col-sm-10">
+  <input type="file" name="photo" class="custom-file-input" id="customFile">
+  <label class="custom-file-label" for="customFile">Profile photo</label>
+</div>
+  </div>
   
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">

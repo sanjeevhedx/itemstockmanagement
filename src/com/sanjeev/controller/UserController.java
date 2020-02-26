@@ -1,14 +1,17 @@
 package com.sanjeev.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import com.sanjeev.data.UserDAOImpl;
 import com.sanjeev.model.User;
@@ -17,6 +20,11 @@ import com.sanjeev.model.User;
  * Servlet implementation class UserController
  */
 @WebServlet("/UserController")
+@MultipartConfig(
+		fileSizeThreshold = 1024 * 10, // 10 KB
+		maxFileSize = 1024 * 300, // 300 KB
+		maxRequestSize = 1024 * 1024 // 1 MB
+		)
 public class UserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -42,6 +50,10 @@ public class UserController extends HttpServlet {
 			case "USER":
 				getUser(request,response);
 				break;
+				
+			case "LOGOUT":
+				logOut(request, response);
+				break;
 			
 			}
 			
@@ -51,6 +63,17 @@ public class UserController extends HttpServlet {
 			throw new ServletException(e);
 		}
 		
+		
+	}
+	
+private void logOut(HttpServletRequest request, HttpServletResponse response)throws Exception {
+		
+		HttpSession session =request.getSession();
+		session.invalidate();
+		String message = "Log out successfully";
+		RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+		request.setAttribute("msg",message);
+		rd.forward(request,response);
 		
 	}
 
@@ -92,11 +115,18 @@ public class UserController extends HttpServlet {
 		String lastName = request.getParameter("lastName");
 		String address = request.getParameter("address");
 		String city = request.getParameter("city");
+		Part filePart = request.getPart("photo");
+		
+		InputStream inputStream = null;
+		
+		if(filePart != null) {
+			inputStream = filePart.getInputStream();
+		}
 		
 		String message = null;
 		String resource ="registration.jsp";
 		
-		User user = new User(userId, password, firstName, lastName, address, city);
+		User user = new User(userId, password, firstName, lastName, address, city, inputStream);
 		
 						
 		try {

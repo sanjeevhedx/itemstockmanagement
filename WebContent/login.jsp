@@ -11,6 +11,9 @@
 <title>Stock Management</title>
 </head>
 <body>
+
+<% response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");%>
+
 <div class="container">
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark p-0">
     <div class="container">

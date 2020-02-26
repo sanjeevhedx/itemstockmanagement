@@ -37,19 +37,18 @@
         
            <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="fa fa-user-times"></i> 
+               <img src="data:image/jpg;base64,${user.base64Image}" class="rounded-circle" width="40" height="40"/>
             </a>
-          </li>
-          
-          <li class="nav-item mr-3">
-            <a href="#" class="nav-link">
-              <i class="fa fa-user"></i>welcome sanjeev
-            </a>
-           
-          </li>
+            </li>
+        
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="fa fa-user-times"></i> Logout
+               Welcome: ${user.firstName }
+            </a>
+            </li>
+          <li class="nav-item">
+            <a href="UserController?command=LOGOUT" class="nav-link">
+               SignOut
             </a>
           </li>
         </ul>
