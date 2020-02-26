@@ -37,8 +37,8 @@
         <ul class="navbar-nav ml-auto">
         
         <li class="nav-item">
-            <a href="#" class="nav-link">
-               <img src="data:image/jpg;base64,${user.base64Image}" class="rounded-circle" width="40" height="40"/>
+            <a href="#" data-toggle="modal" data-target="#addPostModal">
+              <i class="fa fa-user-times"></i> <img src="data:image/jpg;base64,${user.base64Image}" class="rounded-circle" width="50" height="50"/>
             </a>
             </li>
         
@@ -138,152 +138,55 @@
 			
 			
 			
-  <!-- MODALS -->
-
-  <!-- ADD POST MODAL -->
+  <!-- POST MODAL -->
+			
   <div class="modal fade" id="addPostModal">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header bg-primary text-white">
-          <h5 class="modal-title">Add Post</h5>
-          <button class="close" data-dismiss="modal">
-            <span>&times;</span>
-          </button>
+          <h5 class="modal-title">Update Photo</h5>
+          <button class="close" data-dismiss="modal"><span>&times;</span></button>
         </div>
+        
         <div class="modal-body">
-          <form>
-            <div class="form-group">
-              <label for="title">Title</label>
-              <input type="text" class="form-control">
-            </div>
-            <div class="form-group">
-              <label for="category">Category</label>
-              <select class="form-control">
-                <option value="">Web Development</option>
-                <option value="">Tech Gadgets</option>
-                <option value="">Business</option>
-                <option value="">Health & Wellness</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="image">Upload Image</label>
-              <div class="custom-file">
-                <input type="file" class="custom-file-input" id="image">
-                <label for="image" class="custom-file-label">Choose File</label>
-              </div>
+        
+          <form action="UserController" method="post" enctype="multipart/form-data">
+          
+         	 <input type="hidden" name="command" value="UPDATEPHOTO">
+         	 <input type="hidden" name="userId" value="${user.userId}">
+          
+              <div class="form-group">
+              <label for="file">Photo Upload</label>
+              <input type="file" name="photo" class="form-control-file">
               <small class="form-text text-muted">Max Size 3mb</small>
             </div>
-            <div class="form-group">
-              <label for="body">Body</label>
-              <textarea name="editor1" class="form-control"></textarea>
-            </div>
-          </form>
+            
+            <div class="modal-footer">
+          <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button class="btn btn-primary" type="submit">Update Photo</button>
         </div>
-        <div class="modal-footer">
-          <button class="btn btn-primary" data-dismiss="modal">Save Changes</button>
+            
+            </form>
+            
         </div>
+        
+        
+        
+        
       </div>
     </div>
   </div>
-
-  <!-- ADD CATEGORY MODAL -->
-  <div class="modal fade" id="addCategoryModal">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header bg-success text-white">
-          <h5 class="modal-title">Add Category</h5>
-          <button class="close" data-dismiss="modal">
-            <span>&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="form-group">
-              <label for="title">Title</label>
-              <input type="text" class="form-control">
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-success" data-dismiss="modal">Save Changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ADD USER MODAL -->
-  <div class="modal fade" id="addUserModal">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header bg-warning text-white">
-          <h5 class="modal-title">Add User</h5>
-          <button class="close" data-dismiss="modal">
-            <span>&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="form-group">
-              <label for="name">Name</label>
-              <input type="text" class="form-control">
-            </div>
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" class="form-control">
-            </div>
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input type="password" class="form-control">
-            </div>
-            <div class="form-group">
-              <label for="password2">Confirm Password</label>
-              <input type="password" class="form-control">
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-warning" data-dismiss="modal">Save Changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
+  
+  
+  
 			
-			
-			
-			 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	 <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script>	
    </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

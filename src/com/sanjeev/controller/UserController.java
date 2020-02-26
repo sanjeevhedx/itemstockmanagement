@@ -51,6 +51,10 @@ public class UserController extends HttpServlet {
 				getUser(request,response);
 				break;
 				
+			case "UPDATEPHOTO":
+				updatePhoto(request,response);
+				break;
+				
 			case "LOGOUT":
 				logOut(request, response);
 				break;
@@ -66,6 +70,28 @@ public class UserController extends HttpServlet {
 		
 	}
 	
+private void updatePhoto(HttpServletRequest request, HttpServletResponse response)throws Exception {
+	String userId = request.getParameter("userId");
+	
+	Part filePart = request.getPart("photo");
+	
+	InputStream inputStream = null;
+	
+	if(filePart != null) {
+		inputStream = filePart.getInputStream();
+	}
+	
+	userUtil.updatePhoto(userId,inputStream);
+	
+	User user = userUtil.getUser(userId);
+	HttpSession session = request.getSession();
+	session.setAttribute("user", user);
+	
+	
+    response.sendRedirect(request.getContextPath() + "/ItemController");
+		
+	}
+
 private void logOut(HttpServletRequest request, HttpServletResponse response)throws Exception {
 		
 		HttpSession session =request.getSession();

@@ -1,5 +1,6 @@
 package com.sanjeev.data;
 
+import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -69,6 +70,26 @@ public class UserDAOImpl implements UserDAO {
 		}
 		
 		return user;
+	}
+
+	@Override
+	public void updatePhoto(String userId, InputStream inputStream) throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		try {
+			con = ConnectionFactory.getCon();
+			ps = con.prepareStatement("update users set photo=? where user_id=?");
+			ps.setBlob(1, inputStream);
+			ps.setString(2, userId);
+			
+			ps.executeUpdate();
+		}
+		finally {
+			con.close();
+		}
+		
+		
 	}
 
 }
