@@ -6,13 +6,38 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
 import com.sanjeev.model.User;
 
 public class UserDAOImpl implements UserDAO {
+	
+	SessionFactory factory = new Configuration()
+			.configure("hibernate.cfg.xml")
+			.addAnnotatedClass(User.class)
+			.buildSessionFactory();
 
 	@Override
 	public void addUser(User user) throws Exception {
-		Connection con = null;
+		
+		
+		Session session = factory.getCurrentSession();
+		
+		try {
+			
+			session.beginTransaction();
+			
+			session.save(user);
+			
+			session.getTransaction().commit();
+		}
+		finally {
+			session.close();
+		}
+		
+		/*Connection con = null;
 		PreparedStatement ps = null;
 		try {
 			con = ConnectionFactory.getCon();
@@ -28,14 +53,36 @@ public class UserDAOImpl implements UserDAO {
 		}
 		finally {
 			con.close();
-		}
+		}*/
 		
 	}
 
 	@Override
 	public User getUser(String userId) throws Exception {
 		
-		Connection con = null;
+		Session session = factory.getCurrentSession();
+		
+		User user = null;
+		
+		try {
+			
+			session.beginTransaction();
+			
+			user = session.get(User.class, userId);
+			
+			if(user == null) {
+				throw new Exception("Invalid user id");
+			}
+			
+			session.getTransaction().commit();
+		}
+		finally {
+			session.close();
+		}
+		
+		return user;
+		
+		/*Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		User user = null;
@@ -69,7 +116,7 @@ public class UserDAOImpl implements UserDAO {
 			con.close();
 		}
 		
-		return user;
+		return user;*/
 	}
 
 	@Override

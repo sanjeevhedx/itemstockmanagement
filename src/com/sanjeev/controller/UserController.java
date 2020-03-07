@@ -141,18 +141,32 @@ private void logOut(HttpServletRequest request, HttpServletResponse response)thr
 		String lastName = request.getParameter("lastName");
 		String address = request.getParameter("address");
 		String city = request.getParameter("city");
+			
+		User user = new User();
+		
+		user.setUserId(userId);
+		user.setPassword(password);
+		user.setFirstName(firstName);
+		user.setLastName(lastName);
+		user.setAddress(address);
+		user.setCity(city);
+		
 		Part filePart = request.getPart("photo");
-		
 		InputStream inputStream = null;
-		
-		if(filePart != null) {
+		if(filePart != null && filePart.getSize() > 0) {
+			long size = filePart.getSize();
+			byte[] imageBytes = new byte[(int) size];
 			inputStream = filePart.getInputStream();
+			inputStream.read(imageBytes);
+			inputStream.close();
+			
+			user.setPhoto(imageBytes);
 		}
 		
 		String message = null;
 		String resource ="registration.jsp";
 		
-		User user = new User(userId, password, firstName, lastName, address, city, inputStream);
+		
 		
 						
 		try {

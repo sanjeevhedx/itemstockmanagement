@@ -3,25 +3,69 @@ package com.sanjeev.model;
 import java.io.InputStream;
 import java.util.Base64;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name="users")
 public class User {
 	
+	@Id
+	@Column(name="user_id")
 	private String userId;
+	
+	@Column(name="password")
 	private String password;
+	
+	@Column(name="first_name")
 	private String firstName;
+	
+	@Column(name="last_name")
 	private String lastName;
+	
+	@Column(name="address")
 	private String address;
+	
+	@Column(name="city")
 	private String city;
 	
+	@Column(name="photo")
 	private byte[] photo;
+	
+	@Transient
 	private String base64Image;
-	private InputStream inputStream;
+	
+	//private InputStream inputStream;
 	
 	
 	public User() {
 		
 	}
 	
+	
+
 	public User(String userId, String password, String firstName, String lastName, String address, String city,
+			byte[] photo) {
+		super();
+		this.userId = userId;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.address = address;
+		this.city = city;
+		this.photo = photo;
+	}
+
+
+
+
+
+
+
+	/*public User(String userId, String password, String firstName, String lastName, String address, String city,
 			InputStream inputStream) {
 		super();
 		this.userId = userId;
@@ -31,14 +75,14 @@ public class User {
 		this.address = address;
 		this.city = city;
 		this.inputStream = inputStream;
-	}
+	}*/
 		
-	public InputStream getInputStream() {
+	/*public InputStream getInputStream() {
 		return inputStream;
 	}
 	public void setInputStream(InputStream inputStream) {
 		this.inputStream = inputStream;
-	}
+	}*/
 	
 	public String getBase64Image() {
 		this.base64Image = Base64.getEncoder().encodeToString(this.photo);
