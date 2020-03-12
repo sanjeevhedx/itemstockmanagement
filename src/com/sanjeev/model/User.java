@@ -1,6 +1,5 @@
 package com.sanjeev.model;
 
-import java.io.InputStream;
 import java.util.Base64;
 
 import javax.persistence.Column;
@@ -45,8 +44,6 @@ public class User {
 		
 	}
 	
-	
-
 	public User(String userId, String password, String firstName, String lastName, String address, String city,
 			byte[] photo) {
 		super();
@@ -58,31 +55,6 @@ public class User {
 		this.city = city;
 		this.photo = photo;
 	}
-
-
-
-
-
-
-
-	/*public User(String userId, String password, String firstName, String lastName, String address, String city,
-			InputStream inputStream) {
-		super();
-		this.userId = userId;
-		this.password = password;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.address = address;
-		this.city = city;
-		this.inputStream = inputStream;
-	}*/
-		
-	/*public InputStream getInputStream() {
-		return inputStream;
-	}
-	public void setInputStream(InputStream inputStream) {
-		this.inputStream = inputStream;
-	}*/
 	
 	public String getBase64Image() {
 		this.base64Image = Base64.getEncoder().encodeToString(this.photo);
@@ -151,11 +123,5 @@ public class User {
 		return "User [userId=" + userId + ", password=" + password + ", firstName=" + firstName + ", lastName="
 				+ lastName + ", address=" + address + ", city=" + city + "]";
 	}
-	
-	
-	
-	
-	
-	
 
 }

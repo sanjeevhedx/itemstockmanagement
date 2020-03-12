@@ -35,12 +35,16 @@
          </ul>
 		
         <ul class="navbar-nav ml-auto">
-        
+      
+        <c:if test="${not empty user.photo }">
+         
         <li class="nav-item">
             <a href="#" data-toggle="modal" data-target="#addPostModal">
               <i class="fa fa-user-times"></i> <img src="data:image/jpg;base64,${user.base64Image}" class="rounded-circle" width="50" height="50"/>
             </a>
-            </li>
+            </li> 
+       
+       </c:if>
         
           <li class="nav-item">
             <a href="#" class="nav-link">

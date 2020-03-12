@@ -55,18 +55,14 @@ try {
 				listItems(request,response);				
 				break;
 				
-			case "ADD":
-				addItem(request,response);
+			case "ADDORUPDATE":
+				addOrUpdateItem(request,response);
 				break;
 				
 			case "LOAD":
 				loadItem(request,response);
 				break;
 				
-			case "UPDATE":
-				updateItem(request,response);
-				break;
-			
 			case "DELETE":
 				deleteItem(request,response);
 				break;
@@ -110,34 +106,7 @@ private void searchItem(HttpServletRequest request, HttpServletResponse response
 		listItems(request, response);
 		
 	}
-	private void updateItem(HttpServletRequest request, HttpServletResponse response)throws Exception {
-		
-		int itemCode = Integer.parseInt(request.getParameter("itemCode"));
-		String itemName = request.getParameter("itemName");
-		String unit = request.getParameter("unit");
-		int beginningInventory = Integer.parseInt(request.getParameter("beginningInventory"));
-		int quantityOnHand = Integer.parseInt(request.getParameter("quantityOnHand"));
-		double pricePerUnit = Double.parseDouble(request.getParameter("pricePerUnit"));
-		String dateOfManufacture = request.getParameter("dateOfManufacture");
-		String dateOfExpiry = request.getParameter("dateOfExpiry");
-		String location = request.getParameter("location");
-		String itemCategory = request.getParameter("itemCategory");
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date dom = new Date();
-		dom = sdf.parse(dateOfManufacture);
-		
-		Date doe = new Date();
-		doe = sdf.parse(dateOfExpiry);
-		
-		Item item  = new Item(itemCode, itemName, unit, beginningInventory, quantityOnHand, pricePerUnit, dom, doe, location, itemCategory);
-		
-		itemUtil.updateItem(item);
-		
-		listItems(request, response);
-		
-	}
-
+	
 	private void loadItem(HttpServletRequest request, HttpServletResponse response)throws Exception {
 		
 		int itemCode = Integer.parseInt(request.getParameter("itemCode"));
@@ -149,8 +118,10 @@ private void searchItem(HttpServletRequest request, HttpServletResponse response
 		
 	}
 
-	private void addItem(HttpServletRequest request, HttpServletResponse response)throws Exception {
-		 
+	private void addOrUpdateItem(HttpServletRequest request, HttpServletResponse response)throws Exception {
+		
+		String itemCode = request.getParameter("itemCode");
+		
 		String itemName = request.getParameter("itemName");
 		String unit = request.getParameter("unit");
 		int beginningInventory = Integer.parseInt(request.getParameter("beginningInventory"));
@@ -181,7 +152,11 @@ private void searchItem(HttpServletRequest request, HttpServletResponse response
 	
 		Item item = new Item(itemName, unit, beginningInventory, quantityOnHand, pricePerUnit, dom, doe, location, itemCategory);
 		
-		itemUtil.addItem(item);
+		if(itemCode != null) {
+			item.setItemCode(Integer.parseInt(itemCode));
+		}
+		
+		itemUtil.addOrUpdateItem(item);
 		
 		// send back to main page (the item list)
 

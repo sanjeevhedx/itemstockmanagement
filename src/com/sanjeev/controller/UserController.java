@@ -71,17 +71,24 @@ public class UserController extends HttpServlet {
 	}
 	
 private void updatePhoto(HttpServletRequest request, HttpServletResponse response)throws Exception {
+	
 	String userId = request.getParameter("userId");
 	
 	Part filePart = request.getPart("photo");
 	
 	InputStream inputStream = null;
 	
-	if(filePart != null) {
+	if(filePart != null && filePart.getSize() > 0) {
+		long size = filePart.getSize();
+		byte[] imageBytes = new byte[(int) size];
 		inputStream = filePart.getInputStream();
+		inputStream.read(imageBytes);
+		inputStream.close();
+		
+		userUtil.updatePhoto(userId,imageBytes);
 	}
 	
-	userUtil.updatePhoto(userId,inputStream);
+	
 	
 	User user = userUtil.getUser(userId);
 	HttpSession session = request.getSession();
@@ -114,6 +121,7 @@ private void logOut(HttpServletRequest request, HttpServletResponse response)thr
 		try {
 			
 			User user = userUtil.getUser(userId);
+			
 			if(user.getPassword().equals(password)) {
 				resource = "ItemController";
 				HttpSession session = request.getSession();

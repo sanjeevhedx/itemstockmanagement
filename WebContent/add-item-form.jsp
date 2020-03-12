@@ -73,7 +73,7 @@
 		 <h6 style="color: red;">${msg}</h6>
 		<form action="ItemController" method="post">
 		
-			<input type="hidden" name="command" value="ADD" />
+			<input type="hidden" name="command" value="ADDORUPDATE" />
 			
 			<table>
 				<tbody>

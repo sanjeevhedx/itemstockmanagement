@@ -73,7 +73,7 @@
 		
 		<form action="ItemController" method="post">
 		
-			<input type="hidden" name="command" value="UPDATE" />
+			<input type="hidden" name="command" value="ADDORUPDATE" />
 			<input type="hidden" name="itemCode" value="${ITEM.itemCode }" />
 			
 			<table>
